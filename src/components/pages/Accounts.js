@@ -4,7 +4,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import InputBase from "@material-ui/core/InputBase";
 import Select from "@material-ui/core/Select";
 import withStyles from "@material-ui/core/styles/withStyles";
-import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core";
@@ -55,7 +54,8 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(4),
         marginLeft: theme.spacing(5),
         fontSize: 25,
-        height: 41
+        height: 41,
+        minWidth: 41
     },
     container: {
         width: "100%"
@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const AddingAccountForm = ({accountName, setAccountName, type, setType, /*drcr, setdrcr,*/ money, setMoney, setAccounts, accounts}) => {
+const AddingAccountForm = ({accountName, setAccountName, type, setType, money, setMoney, setAccounts, accounts}) => {
     const classes = useStyles();
     return (
         <Container className={classes.container} key={"Container"}>
@@ -122,7 +122,7 @@ const AddingAccountForm = ({accountName, setAccountName, type, setType, /*drcr, 
                         if (e.target.value.charAt(0) !== '$' && re.test(e.target.value)) {
                             setMoney("$"+e.target.value)
                         }
-                        else if (re.test(e.target.value.substr(1)) || e.target.value.charAt(0) === '$' && e.target.value.substr(1) === "") {
+                        else if (re.test(e.target.value.substr(1)) || (e.target.value.charAt(0) === '$' && e.target.value.substr(1) === "")) {
                             setMoney(e.target.value)
                         }
                     }}
@@ -143,7 +143,7 @@ const AddingAccountForm = ({accountName, setAccountName, type, setType, /*drcr, 
                         money: money.substr(1),
                         key: accountName
                     }
-                    setAccounts(accounts.concat(newItem))
+                    updateList(setAccounts, accounts, newItem, type, true)
                     e.preventDefault()
                     console.log(accounts)
                 }}
@@ -152,10 +152,98 @@ const AddingAccountForm = ({accountName, setAccountName, type, setType, /*drcr, 
     )
 }
 
+const updateList = (setAccounts, accounts, newItem, type, add) => {
+    if (add) {
+        if (type === "Asset") {
+            setAccounts({
+                assets: accounts.assets.concat(newItem),
+                liabilities: accounts.liabilities,
+                expenses: accounts.expenses,
+                revenues: accounts.revenues,
+                commonShares: accounts.commonShares
+            })
+        } else if (type === "Liability") {
+            setAccounts({
+                assets: accounts.assets,
+                liabilities: accounts.liabilities.concat(newItem),
+                expenses: accounts.expenses,
+                revenues: accounts.revenues,
+                commonShares: accounts.commonShares
+            })
+        } else if (type === "Expense") {
+            setAccounts({
+                assets: accounts.assets,
+                liabilities: accounts.liabilities,
+                expenses: accounts.expenses.concat(newItem),
+                revenues: accounts.revenues,
+                commonShares: accounts.commonShares
+            })
+        } else if (type === "Revenue") {
+            setAccounts({
+                assets: accounts.assets,
+                liabilities: accounts.liabilities,
+                expenses: accounts.expenses,
+                revenues: accounts.revenues.concat(newItem),
+                commonShares: accounts.commonShares
+            })
+        } else {
+            setAccounts({
+                assets: accounts.assets,
+                liabilities: accounts.liabilities,
+                expenses: accounts.expenses,
+                revenues: accounts.revenues,
+                commonShares: accounts.commonShares.concat(newItem)
+            })
+        }
+    }
+    else {
+        if (type === "Asset") {
+            setAccounts({
+                assets: newItem,
+                liabilities: accounts.liabilities,
+                expenses: accounts.expenses,
+                revenues: accounts.revenues,
+                commonShares: accounts.commonShares
+            })
+        } else if (type === "Liability") {
+            setAccounts({
+                assets: accounts.assets,
+                liabilities: newItem,
+                expenses: accounts.expenses,
+                revenues: accounts.revenues,
+                commonShares: accounts.commonShares
+            })
+        } else if (type === "Expense") {
+            setAccounts({
+                assets: accounts.assets,
+                liabilities: accounts.liabilities,
+                expenses: newItem,
+                revenues: accounts.revenues,
+                commonShares: accounts.commonShares
+            })
+        } else if (type === "Revenue") {
+            setAccounts({
+                assets: accounts.assets,
+                liabilities: accounts.liabilities,
+                expenses: accounts.expenses,
+                revenues: newItem,
+                commonShares: accounts.commonShares
+            })
+        } else {
+            setAccounts({
+                assets: accounts.assets,
+                liabilities: accounts.liabilities,
+                expenses: accounts.expenses,
+                revenues: accounts.revenues,
+                commonShares: newItem
+            })
+        }
+    }
+}
+
 function Accounts(props) {
     const [accountName, setAccountName] = React.useState("")
     const [type, setType] = React.useState("Asset")
-    // const [drcr, setdrcr] = React.useState("DR")
     const [money, setMoney] = React.useState("")
 
     return (
@@ -166,17 +254,14 @@ function Accounts(props) {
                 setAccountName={setAccountName}
                 type={type}
                 setType={setType}
-                // drcr={drcr}
-                // setdrcr={setdrcr}
                 money={money}
                 setMoney={setMoney}
                 setAccounts={props.setAccounts}
                 accounts={props.accounts}
             />
-            <AccountsList accounts={props.accounts} />
+            <AccountsList accounts={props.accounts} setAccounts={props.setAccounts} updateList={updateList}/>
         </div>
     )
 }
 
 export default Accounts
-
