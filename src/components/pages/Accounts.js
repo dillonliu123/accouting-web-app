@@ -144,6 +144,8 @@ const AddingAccountForm = ({accountName, setAccountName, type, setType, money, s
                         key: accountName
                     }
                     updateList(setAccounts, accounts, newItem, type, true)
+                    setAccountName("")
+                    setMoney("$")
                     e.preventDefault()
                     console.log(accounts)
                 }}
@@ -244,7 +246,7 @@ const updateList = (setAccounts, accounts, newItem, type, add) => {
 function Accounts(props) {
     const [accountName, setAccountName] = React.useState("")
     const [type, setType] = React.useState("Asset")
-    const [money, setMoney] = React.useState("")
+    const [money, setMoney] = React.useState("$")
 
     return (
         <div style={{width: "80%", margin: 20}}>
