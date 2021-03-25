@@ -27,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
 
 const TransactionInput = ({transactions, setTransactions, accounts}) => {
     const [selectedDate, setSelectedDate] = React.useState(new Date())
-    const [selectedAccount, setSelectedAccount] = React.useState("Account")
+    const [selectedAccountName, setSelectedAccountName] = React.useState("Account")
     const [plusMinus, setPlusMinus] = React.useState(true)
     const [changedAmount, setChangedAmount] = React.useState("$")
-    const allAccountsArr = Object.values(accounts)
+    let allAccountsArr = Object.values(accounts)
     const classes = useStyles()
 
     return (
@@ -57,10 +57,10 @@ const TransactionInput = ({transactions, setTransactions, accounts}) => {
                 <InputLabel id="accountLabel">Account</InputLabel>
                 <Select
                     labelId="accountLabel"
-                    value={selectedAccount}
+                    value={selectedAccountName}
 
                     onChange={(event) => {
-                        setSelectedAccount(event.target.value)
+                        setSelectedAccountName(event.target.value)
                     }}
                 >
                     {
@@ -108,23 +108,31 @@ const TransactionInput = ({transactions, setTransactions, accounts}) => {
                 color={"primary"}
                 className={classes.addButton}
                 onClick={(e) => {
-                    let curTrans = {date: format(selectedDate, "MM dd"), account: selectedAccount, increase: plusMinus, amount: changedAmount}
+                    allAccountsArr = Object.values(accounts)
+                    const selectedType = allAccountsArr.find((element) => {
+                        return element.find(inside => {
+                            return inside.accountName === selectedAccountName
+                        })
+                    })[0].drcr
+
+                    let drcr = ((selectedType === "DR" && plusMinus) || (selectedType === "CR" && !plusMinus)) ? "DR" : "CR"
+                    let curTrans = {date: selectedDate, account: selectedAccountName, drcr: drcr, amount: changedAmount}
+                    //: format(selectedDate, "MMM dd")
                     setTransactions(transactions.concat(curTrans))
+                    transactions.sort((a,b) => a.date - b.date)
                     console.log(transactions)
                 }}
-            >Post to Journal</Button>
+            >Add to Journal</Button>
 
         </div>
     )
 }
 
 function Transactions(props) {
-    const [transactions, setTransactions] = React.useState([])
-
     return(
         <div style={{margin: 20, width: "80%"}}>
             <Title titleName={"Transactions"} />
-            <TransactionInput transactions={transactions} setTransactions={setTransactions} accounts={props.accounts}/>
+            <TransactionInput transactions={props.transactions} setTransactions={props.setTransactions} accounts={props.accounts}/>
         </div>
     )
 }
