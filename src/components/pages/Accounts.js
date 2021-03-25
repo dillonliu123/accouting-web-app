@@ -140,7 +140,7 @@ const AddingAccountForm = ({accountName, setAccountName, type, setType, money, s
                         accountName: accountName,
                         type: type,
                         drcr: drcr,
-                        money: money.substr(1),
+                        money: Number(money.substr(1)),
                         key: accountName
                     }
                     updateList(setAccounts, accounts, newItem, type, true)
@@ -154,7 +154,7 @@ const AddingAccountForm = ({accountName, setAccountName, type, setType, money, s
     )
 }
 
-const updateList = (setAccounts, accounts, newItem, type, add) => {
+export const updateList = (setAccounts, accounts, newItem, type, add) => {
     if (add) {
         if (type === "Asset") {
             setAccounts({

@@ -8,8 +8,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
-import { format } from "date-fns"
 import Button from "@material-ui/core/Button";
+import JournalList from "../JournalList";
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -117,10 +117,10 @@ const TransactionInput = ({transactions, setTransactions, accounts}) => {
 
                     let drcr = ((selectedType === "DR" && plusMinus) || (selectedType === "CR" && !plusMinus)) ? "DR" : "CR"
                     let curTrans = {date: selectedDate, account: selectedAccountName, drcr: drcr, amount: changedAmount}
-                    //: format(selectedDate, "MMM dd")
-                    setTransactions(transactions.concat(curTrans))
-                    transactions.sort((a,b) => a.date - b.date)
-                    console.log(transactions)
+                    let newTransArr = transactions.concat(curTrans).sort((a,b) => a.date - b.date)
+                    setTransactions(newTransArr)
+
+                    changeAccountMoney(accounts, selectedAccountName, Number(changedAmount.substr(1)), plusMinus)
                 }}
             >Add to Journal</Button>
 
@@ -128,11 +128,24 @@ const TransactionInput = ({transactions, setTransactions, accounts}) => {
     )
 }
 
+const changeAccountMoney = (accounts, accountName, amount, increase) => {
+    const allAccountsArr = Object.values(accounts)
+    const changedAccount = allAccountsArr.find((element) => {
+        return element.find(element => {
+            return element.accountName === accountName
+        })
+    })[0]
+    const changedAmount = increase? amount : -amount
+    changedAccount.money = changedAccount.money + changedAmount
+    console.log(changedAccount)
+}
+
 function Transactions(props) {
     return(
         <div style={{margin: 20, width: "80%"}}>
             <Title titleName={"Transactions"} />
             <TransactionInput transactions={props.transactions} setTransactions={props.setTransactions} accounts={props.accounts}/>
+            <JournalList transactions={props.transactions} setTransactions={props.setTransactions} />
         </div>
     )
 }
