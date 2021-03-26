@@ -9,7 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import Paper from '@material-ui/core/Paper';
 
-function JournalList({transactions, setTransactions}) {
+function JournalList({transactions, setTransactions, changeAccountMoney, accounts}) {
     return (
         <TableContainer>
             <TableHead>
@@ -33,9 +33,10 @@ function JournalList({transactions, setTransactions}) {
                                 color={"primary"}
                                 style={{fontSize: 25, minWidth: 20, height: 30, width: 20, marginLeft: 50}}
                                 onClick={() => {
-                                    const newList = transactions.filter((i) => i.account !== item.account || i.date !== item.date || i.amount !== item.amount || i.drcr !== item.drcr)
+                                    const newList = transactions.filter((i) => i.accountName !== item.accountName || i.date !== item.date || i.amount !== item.amount || i.drcr !== item.drcr)
                                     setTransactions(newList)
-                                    //TODO: Update the account money when deleting
+
+                                    changeAccountMoney(accounts, item.account, Number(item.amount.substr(1)), !item.plusMinus)
                                 }}
                             >-</Button>
                         </TableCell>

@@ -115,8 +115,10 @@ const TransactionInput = ({transactions, setTransactions, accounts}) => {
                         })
                     })[0].drcr
 
+                    console.log(selectedType)
+
                     let drcr = ((selectedType === "DR" && plusMinus) || (selectedType === "CR" && !plusMinus)) ? "DR" : "CR"
-                    let curTrans = {date: selectedDate, account: selectedAccountName, drcr: drcr, amount: changedAmount}
+                    let curTrans = {date: selectedDate, account: selectedAccountName, drcr: drcr, amount: changedAmount, plusMinus: plusMinus}
                     let newTransArr = transactions.concat(curTrans).sort((a,b) => a.date - b.date)
                     setTransactions(newTransArr)
 
@@ -130,14 +132,17 @@ const TransactionInput = ({transactions, setTransactions, accounts}) => {
 
 const changeAccountMoney = (accounts, accountName, amount, increase) => {
     const allAccountsArr = Object.values(accounts)
+    console.log(allAccountsArr)
+    console.log(accountName)
     const changedAccount = allAccountsArr.find((element) => {
-        return element.find(element => {
-            return element.accountName === accountName
+        return element.find(inside => {
+            return inside.accountName === accountName
         })
-    })[0]
+    }).find( element => {return element.accountName === accountName})
+
+    console.log(changedAccount)
     const changedAmount = increase? amount : -amount
     changedAccount.money = changedAccount.money + changedAmount
-    console.log(changedAccount)
 }
 
 function Transactions(props) {
@@ -145,7 +150,7 @@ function Transactions(props) {
         <div style={{margin: 20, width: "80%"}}>
             <Title titleName={"Transactions"} />
             <TransactionInput transactions={props.transactions} setTransactions={props.setTransactions} accounts={props.accounts}/>
-            <JournalList transactions={props.transactions} setTransactions={props.setTransactions} />
+            <JournalList transactions={props.transactions} setTransactions={props.setTransactions} changeAccountMoney={changeAccountMoney} accounts={props.accounts}/>
         </div>
     )
 }
