@@ -43,6 +43,8 @@ function AccountsList({accounts, setAccounts, updateList}) {
             {generateAccountsList(accounts.revenues)}
             <h4>Common Shares</h4>
             {generateAccountsList(accounts.commonShares)}
+            <h4>Dividends</h4>
+            {generateAccountsList(accounts.dividends)}
         </div>
     )
 }

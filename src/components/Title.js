@@ -3,7 +3,7 @@ import { Title as TitleComponent} from "react-native-paper"
 
 function Title(props) {
     return (
-        <TitleComponent>
+        <TitleComponent style={{width: "100%", display: "block"}}>
             {props.titleName}
         </TitleComponent>
     )

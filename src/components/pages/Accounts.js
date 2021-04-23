@@ -96,6 +96,7 @@ const AddingAccountForm = ({accountName, setAccountName, type, setType, money, s
                     <MenuItem value="Expense">Expense</MenuItem>
                     <MenuItem value="Revenue">Revenue</MenuItem>
                     <MenuItem value="Common Shares">Common Shares</MenuItem>
+                    <MenuItem value="Dividends">Dividends</MenuItem>
                 </Select>
             </FormControl>
 
@@ -135,7 +136,7 @@ const AddingAccountForm = ({accountName, setAccountName, type, setType, money, s
                 color={"primary"}
                 className={classes.addButton}
                 onClick={(e) => {
-                    let drcr = (type === "Asset" || type === "Expense") ? "DR" : "CR"
+                    let drcr = (type === "Asset" || type === "Expense" || type === "Dividends") ? "DR" : "CR"
                     let newItem = {
                         accountName: accountName,
                         type: type,
@@ -162,7 +163,8 @@ export const updateList = (setAccounts, accounts, newItem, type, add) => {
                 liabilities: accounts.liabilities,
                 expenses: accounts.expenses,
                 revenues: accounts.revenues,
-                commonShares: accounts.commonShares
+                commonShares: accounts.commonShares,
+                dividends: accounts.dividends
             })
         } else if (type === "Liability") {
             setAccounts({
@@ -170,7 +172,8 @@ export const updateList = (setAccounts, accounts, newItem, type, add) => {
                 liabilities: accounts.liabilities.concat(newItem),
                 expenses: accounts.expenses,
                 revenues: accounts.revenues,
-                commonShares: accounts.commonShares
+                commonShares: accounts.commonShares,
+                dividends: accounts.dividends
             })
         } else if (type === "Expense") {
             setAccounts({
@@ -178,7 +181,8 @@ export const updateList = (setAccounts, accounts, newItem, type, add) => {
                 liabilities: accounts.liabilities,
                 expenses: accounts.expenses.concat(newItem),
                 revenues: accounts.revenues,
-                commonShares: accounts.commonShares
+                commonShares: accounts.commonShares,
+                dividends: accounts.dividends
             })
         } else if (type === "Revenue") {
             setAccounts({
@@ -186,15 +190,27 @@ export const updateList = (setAccounts, accounts, newItem, type, add) => {
                 liabilities: accounts.liabilities,
                 expenses: accounts.expenses,
                 revenues: accounts.revenues.concat(newItem),
-                commonShares: accounts.commonShares
+                commonShares: accounts.commonShares,
+                dividends: accounts.dividends
             })
-        } else {
+        } else if (type === "Common Shares") {
             setAccounts({
                 assets: accounts.assets,
                 liabilities: accounts.liabilities,
                 expenses: accounts.expenses,
                 revenues: accounts.revenues,
-                commonShares: accounts.commonShares.concat(newItem)
+                commonShares: accounts.commonShares.concat(newItem),
+                dividends: accounts.dividends
+            })
+        }
+        else {
+            setAccounts({
+                assets: accounts.assets,
+                liabilities: accounts.liabilities,
+                expenses: accounts.expenses,
+                revenues: accounts.revenues,
+                commonShares: accounts.commonShares,
+                dividends: accounts.dividends.concat(newItem)
             })
         }
     }
@@ -205,7 +221,8 @@ export const updateList = (setAccounts, accounts, newItem, type, add) => {
                 liabilities: accounts.liabilities,
                 expenses: accounts.expenses,
                 revenues: accounts.revenues,
-                commonShares: accounts.commonShares
+                commonShares: accounts.commonShares,
+                dividends: accounts.dividends
             })
         } else if (type === "Liability") {
             setAccounts({
@@ -213,7 +230,8 @@ export const updateList = (setAccounts, accounts, newItem, type, add) => {
                 liabilities: newItem,
                 expenses: accounts.expenses,
                 revenues: accounts.revenues,
-                commonShares: accounts.commonShares
+                commonShares: accounts.commonShares,
+                dividends: accounts.dividends
             })
         } else if (type === "Expense") {
             setAccounts({
@@ -221,7 +239,8 @@ export const updateList = (setAccounts, accounts, newItem, type, add) => {
                 liabilities: accounts.liabilities,
                 expenses: newItem,
                 revenues: accounts.revenues,
-                commonShares: accounts.commonShares
+                commonShares: accounts.commonShares,
+                dividends: accounts.dividends
             })
         } else if (type === "Revenue") {
             setAccounts({
@@ -229,7 +248,17 @@ export const updateList = (setAccounts, accounts, newItem, type, add) => {
                 liabilities: accounts.liabilities,
                 expenses: accounts.expenses,
                 revenues: newItem,
-                commonShares: accounts.commonShares
+                commonShares: accounts.commonShares,
+                dividends: accounts.dividends
+            })
+        } else if (type === "Common Shares") {
+            setAccounts({
+                assets: accounts.assets,
+                liabilities: accounts.liabilities,
+                expenses: accounts.expenses,
+                revenues: accounts.revenues,
+                commonShares: newItem,
+                dividends: accounts.dividends
             })
         } else {
             setAccounts({
@@ -237,7 +266,8 @@ export const updateList = (setAccounts, accounts, newItem, type, add) => {
                 liabilities: accounts.liabilities,
                 expenses: accounts.expenses,
                 revenues: accounts.revenues,
-                commonShares: newItem
+                commonShares: accounts.commonShares,
+                dividends: newItem
             })
         }
     }
