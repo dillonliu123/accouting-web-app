@@ -67,6 +67,17 @@ const Assets = ({accounts}) => {
 const LiabilitiesAndStockholdersEquity = ({accounts}) => {
     const classes = useStyles()
     let totalLiabilities = 0
+
+    let retainedEarnings = accounts.equity[2].money
+
+    accounts.revenues.map(item => {
+        retainedEarnings += item.money
+    })
+    accounts.expenses.map(item => {
+        retainedEarnings -= item.money
+    })
+    retainedEarnings -= accounts.equity[1].money
+
     return (
         <>
             <TableRow><TableCell colSpan={3} align={"center"} className={classes.sectionHeading}>Liabilities and Stockholder's Equity</TableCell></TableRow>
@@ -90,19 +101,24 @@ const LiabilitiesAndStockholdersEquity = ({accounts}) => {
 
             <TableRow><TableCell>Stockholder's Equity</TableCell><TableCell /><TableCell /></TableRow>
             <TableRow>
-                <TableCell style={{paddingLeft: 40}}>{accounts.commonShares[0].accountName}</TableCell>
-                <TableCell align={"right"}>{"$"+accounts.commonShares[0].money}</TableCell>
+                <TableCell style={{paddingLeft: 40}}>{accounts.equity[0].accountName}</TableCell>
+                <TableCell align={"right"}>{"$"+accounts.equity[0].money}</TableCell>
                 <TableCell />
             </TableRow>
             <TableRow>
-                <TableCell style={{paddingLeft: 40}}>{accounts.commonShares[0].accountName}</TableCell>
-                <TableCell align={"right"}>{"$"+accounts.commonShares[0].money}</TableCell>
+                <TableCell style={{paddingLeft: 40}}>{accounts.equity[2].accountName}</TableCell>
+                <TableCell align={"right"}>{"$"+retainedEarnings}</TableCell>
                 <TableCell />
             </TableRow>
             <TableRow>
                 <TableCell style={{paddingLeft: 70}}>Total Stockholder's Equity</TableCell>
                 <TableCell className={classes.subTotal}/>
-                <TableCell align="right">{"$"+totalLiabilities}</TableCell>
+                <TableCell align="right">{"$"+(accounts.equity[0].money+retainedEarnings)}</TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell>Total Liabilities and Stockholder's Equity</TableCell>
+                <TableCell />
+                <TableCell align={"right"} className={classes.total}>{"$"+(accounts.equity[0].money+retainedEarnings + totalLiabilities)}</TableCell>
             </TableRow>
         </>
     )

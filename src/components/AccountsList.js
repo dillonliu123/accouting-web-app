@@ -13,15 +13,19 @@ function AccountsList({accounts, setAccounts, updateList}) {
                             <TableCell component={"th"} scope={"row"}>{item.accountName}</TableCell>
                             <TableCell align={"right"}>{"$"+item.money}</TableCell>
                             <TableCell aligh={"right"} padding={"checkbox"}>
-                                <Button
-                                    variant={"contained"}
-                                    color={"primary"}
-                                    style={{fontSize: 25, minWidth: 20, height: 30, width: 20, marginLeft: 50}}
-                                    onClick={() => {
-                                        const newList = list.filter((i) => i.accountName !== item.accountName)
-                                        updateList(setAccounts, accounts, newList, item.type, false)
-                                    }}
-                                >-</Button>
+                                {item.type === "Equity" ?
+                                    null
+                                    :
+                                    <Button
+                                        variant={"contained"}
+                                        color={"primary"}
+                                        style={{fontSize: 25, minWidth: 20, height: 30, width: 20, marginLeft: 50}}
+                                        onClick={() => {
+                                            const newList = list.filter((i) => i.accountName !== item.accountName)
+                                            updateList(setAccounts, accounts, newList, item.type, false)
+                                        }}
+                                    >-</Button>
+                                }
                             </TableCell>
                         </TableRow>
                     )
@@ -41,10 +45,8 @@ function AccountsList({accounts, setAccounts, updateList}) {
             {generateAccountsList(accounts.expenses)}
             <h4>Revenue</h4>
             {generateAccountsList(accounts.revenues)}
-            <h4>Common Shares</h4>
-            {generateAccountsList(accounts.commonShares)}
-            <h4>Dividends</h4>
-            {generateAccountsList(accounts.dividends)}
+            <h4>Equity</h4>
+            {generateAccountsList(accounts.equity)}
         </div>
     )
 }

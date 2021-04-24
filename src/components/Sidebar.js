@@ -48,7 +48,7 @@ const bar = (
         </List>
         <Divider />
         <List>
-            {["Balance Sheet", "Income Statement", "Trial Balance", "Ledgers"].map((text) => (
+            {["Retained Earnings Statement","Balance Sheet", "Income Statement", "Trial Balance", "Ledgers"].map((text) => (
                 <Link
                     to = {text}
                     style={{
