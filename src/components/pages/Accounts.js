@@ -164,6 +164,7 @@ const AddingAccountForm = ({accountName, setAccountName, type, setType, money, s
                         type: type,
                         drcr: drcr,
                         money: Number(money.substr(1)),
+                        beg: Number(money.substr(1)),
                         key: accountName
                     }
                     updateList(setAccounts, accounts, newItem, type, true)

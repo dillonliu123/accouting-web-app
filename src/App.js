@@ -6,9 +6,11 @@ import Transactions from "./components/pages/Transactions"
 import BalanceSheet from "./components/pages/BalanceSheet"
 import IncomeStatement from "./components/pages/IncomeStatement"
 import RetainedEarningsStatement from "./components/pages/RetainedEarningsStatement"
+import TrialBalance from "./components/pages/TrialBalance";
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import React from "react";
 import {format} from "date-fns";
+import Ledgers from "./components/pages/Ledgers";
 
 function App() {
     const [accounts, setAccounts] = React.useState({
@@ -22,6 +24,7 @@ function App() {
                 type: "Equity",
                 drcr: "CR",
                 money: 0,
+                beg: 0,
                 key: "Common Shares"
             },
             {
@@ -29,6 +32,7 @@ function App() {
                 type: "Equity",
                 drcr: "DR",
                 money: 0,
+                beg: 0,
                 key: "Dividends"
             },
             {
@@ -36,6 +40,7 @@ function App() {
                 type: "Equity",
                 drcr: "CR",
                 money: 0,
+                beg: 0,
                 key: "Retained Earnings"
             }
 
@@ -56,8 +61,8 @@ function App() {
                     <Route path="/Retained Earnings Statement" render={() => <RetainedEarningsStatement accounts={accounts} companyName={companyName} date={format(date, "MMMM dd yyyy")}/>} />
                     <Route path="/Balance Sheet" render={() => <BalanceSheet accounts={accounts} companyName={companyName} date={format(date, "MMMM dd yyyy")}/>} />
                     <Route path="/Income Statement" render={() => <IncomeStatement accounts={accounts} companyName={companyName} date={format(date, "MMMM dd yyyy")}/>} />
-                    <Route path="Trial Balance" />
-                    <Route path="Ledgers" />
+                    <Route path="/Trial Balance" render={() => <TrialBalance accounts={accounts} companyName={companyName} date={format(date, "MMMM dd yyyy")} />} />
+                    <Route path="/Ledgers" render={() => <Ledgers accounts={accounts} transactions={transactions} />} />
                 </Switch>
             </div>
         </Router>

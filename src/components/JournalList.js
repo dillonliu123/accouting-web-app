@@ -4,14 +4,11 @@ import TableCell from "@material-ui/core/TableCell";
 import Button from "@material-ui/core/Button";
 import { format } from "date-fns"
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import Paper from '@material-ui/core/Paper';
 
 function JournalList({transactions, setTransactions, changeAccountMoney, accounts}) {
     return (
-        <TableContainer>
+        <Table style={{minWidth: 600, width: "unset"}}>
             <TableHead>
                 <TableRow>
                     <TableCell>Date</TableCell>
@@ -25,15 +22,15 @@ function JournalList({transactions, setTransactions, changeAccountMoney, account
                     <TableRow key={item.account+item.amount+item.date+item.drcr}>
                         <TableCell align={"left"}>{format(item.date, "MMM dd")}</TableCell>
                         <TableCell align={"left"}>{item.account}</TableCell>
-                        <TableCell align={"right"}>{item.drcr === "DR" ? item.amount : ""}</TableCell>
-                        <TableCell align={"right"}>{item.drcr === "CR" ? item.amount : ""}</TableCell>
+                        <TableCell align={"right"}>{item.drcr === "DR" ? "$"+item.amount : ""}</TableCell>
+                        <TableCell align={"right"}>{item.drcr === "CR" ? "$"+item.amount : ""}</TableCell>
                         <TableCell align={"right"} padding={"checkbox"}>
                             <Button
                                 variant={"contained"}
                                 color={"primary"}
                                 style={{fontSize: 25, minWidth: 20, height: 30, width: 20, marginLeft: 50}}
                                 onClick={() => {
-                                    const newList = transactions.filter((i) => i.accountName !== item.accountName || i.date !== item.date || i.amount !== item.amount || i.drcr !== item.drcr)
+                                    const newList = transactions.filter((i) => i.key !== item.accountName || i.date !== item.date || i.amount !== item.amount || i.drcr !== item.drcr)
                                     setTransactions(newList)
 
                                     changeAccountMoney(accounts, item.account, Number(item.amount.substr(1)), !item.plusMinus)
@@ -43,7 +40,7 @@ function JournalList({transactions, setTransactions, changeAccountMoney, account
                     </TableRow>
                 )
             })}
-        </TableContainer>
+        </Table>
     )
 }
 

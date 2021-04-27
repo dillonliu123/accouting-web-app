@@ -109,16 +109,18 @@ const TransactionInput = ({transactions, setTransactions, accounts}) => {
                 className={classes.addButton}
                 onClick={(e) => {
                     allAccountsArr = Object.values(accounts)
-                    const selectedType = allAccountsArr.find((element) => {
-                        return element.find(inside => {
-                            return inside.accountName === selectedAccountName
-                        })
-                    })[0].drcr
+                    let selectedType;
+                    for (let i = 0; i < allAccountsArr.length; i++) {
+                        for (let j = 0; j < allAccountsArr[i].length; j++) {
+                            if (allAccountsArr[i][j].accountName === selectedAccountName)
+                                selectedType = allAccountsArr[i][j].drcr
+                        }
+                    }
 
                     console.log(selectedType)
 
                     let drcr = ((selectedType === "DR" && plusMinus) || (selectedType === "CR" && !plusMinus)) ? "DR" : "CR"
-                    let curTrans = {date: selectedDate, account: selectedAccountName, drcr: drcr, amount: changedAmount, plusMinus: plusMinus}
+                    let curTrans = {date: selectedDate, account: selectedAccountName, drcr: drcr, amount: Number(changedAmount.substr(1)), plusMinus: plusMinus}
                     let newTransArr = transactions.concat(curTrans).sort((a,b) => a.date - b.date)
                     setTransactions(newTransArr)
 
