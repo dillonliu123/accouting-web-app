@@ -117,14 +117,13 @@ const TransactionInput = ({transactions, setTransactions, accounts}) => {
                         }
                     }
 
-                    console.log(selectedType)
-
                     let drcr = ((selectedType === "DR" && plusMinus) || (selectedType === "CR" && !plusMinus)) ? "DR" : "CR"
                     let curTrans = {date: selectedDate, account: selectedAccountName, drcr: drcr, amount: Number(changedAmount.substr(1)), plusMinus: plusMinus}
                     let newTransArr = transactions.concat(curTrans).sort((a,b) => a.date - b.date)
                     setTransactions(newTransArr)
 
                     changeAccountMoney(accounts, selectedAccountName, Number(changedAmount.substr(1)), plusMinus)
+                    console.log(transactions)
                 }}
             >Add to Journal</Button>
 
@@ -134,15 +133,13 @@ const TransactionInput = ({transactions, setTransactions, accounts}) => {
 
 const changeAccountMoney = (accounts, accountName, amount, increase) => {
     const allAccountsArr = Object.values(accounts)
-    console.log(allAccountsArr)
-    console.log(accountName)
+
     const changedAccount = allAccountsArr.find((element) => {
         return element.find(inside => {
             return inside.accountName === accountName
         })
     }).find( element => {return element.accountName === accountName})
 
-    console.log(changedAccount)
     const changedAmount = increase? amount : -amount
     changedAccount.money = changedAccount.money + changedAmount
 }

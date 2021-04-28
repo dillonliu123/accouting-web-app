@@ -30,10 +30,10 @@ function JournalList({transactions, setTransactions, changeAccountMoney, account
                                 color={"primary"}
                                 style={{fontSize: 25, minWidth: 20, height: 30, width: 20, marginLeft: 50}}
                                 onClick={() => {
-                                    const newList = transactions.filter((i) => i.key !== item.accountName || i.date !== item.date || i.amount !== item.amount || i.drcr !== item.drcr)
+                                    const newList = transactions.filter((i) => i.account !== item.account || i.date !== item.date || i.amount !== item.amount || i.drcr !== item.drcr || i.plusMinus !== item.plusMinus)
                                     setTransactions(newList)
 
-                                    changeAccountMoney(accounts, item.account, Number(item.amount.substr(1)), !item.plusMinus)
+                                    changeAccountMoney(accounts, item.account, item.amount, !item.plusMinus)
                                 }}
                             >-</Button>
                         </TableCell>

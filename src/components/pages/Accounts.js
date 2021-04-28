@@ -174,7 +174,6 @@ const AddingAccountForm = ({accountName, setAccountName, type, setType, money, s
                     }
                     setMoney("$")
                     e.preventDefault()
-                    console.log(accounts)
                 }}
             >+</Button>
         </Container>

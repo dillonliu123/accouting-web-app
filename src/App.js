@@ -49,7 +49,7 @@ function App() {
     const [transactions, setTransactions] = React.useState([])
     const [companyName, setCompanyName] = React.useState("XYZ Company")
     const [date, setDate] = React.useState(new Date())
-    console.log(accounts)
+
     return (
         <Router>
             <div style={{display: "flex"}} >
