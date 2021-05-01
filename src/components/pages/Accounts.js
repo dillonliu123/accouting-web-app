@@ -219,6 +219,7 @@ export const updateList = (setAccounts, accounts, newItem, type, add) => {
                 return item.accountName === newItem.accountName
             })
             changedAccount.money = newItem.money
+            changedAccount.beg = newItem.money
         }
     }
     // remove the account
