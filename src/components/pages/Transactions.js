@@ -123,7 +123,6 @@ const TransactionInput = ({transactions, setTransactions, accounts}) => {
                     setTransactions(newTransArr)
 
                     changeAccountMoney(accounts, selectedAccountName, Number(changedAmount.substr(1)), plusMinus)
-                    console.log(transactions)
                 }}
             >Add to Journal</Button>
 

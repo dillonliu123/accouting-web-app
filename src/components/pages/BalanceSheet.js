@@ -1,10 +1,7 @@
 import React from 'react'
 import Title from "../Title"
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import { makeStyles } from "@material-ui/core";
@@ -70,10 +67,10 @@ const LiabilitiesAndStockholdersEquity = ({accounts}) => {
 
     let retainedEarnings = accounts.equity[2].money
 
-    accounts.revenues.map(item => {
+    accounts.revenues.forEach(item => {
         retainedEarnings += item.money
     })
-    accounts.expenses.map(item => {
+    accounts.expenses.forEach(item => {
         retainedEarnings -= item.money
     })
     retainedEarnings -= accounts.equity[1].money

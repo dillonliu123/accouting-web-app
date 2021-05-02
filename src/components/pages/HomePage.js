@@ -1,35 +1,12 @@
 import React from 'react';
-import { makeStyles } from "@material-ui/core";
 import Title from "../Title";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import TextField from "@material-ui/core/TextField";
 
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: "100%"
-    },
-    margin: {
-        margin: theme.spacing(1)
-    },
-    input: {
-        border: "1px solid #ced4da",
-        padding: "10px 26px 10px 12px",
-        position: "relative",
-        fontSize: "16px",
-        transition: "border-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-        fontFamily: "-apple-system,BlinkMacSystemFont",
-        borderRadius: "4px",
-        backgroundColor: "#fff",
-        marginTop: 25
-    }
-}))
-
 const InputField = (props) => {
-    const classes = useStyles()
     return (
         <div>
             <FormControl>

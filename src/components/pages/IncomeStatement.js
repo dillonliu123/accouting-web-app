@@ -66,10 +66,10 @@ const Section = ({sectionName, accounts}) => {
 function IncomeStatement(props) {
     const classes = useStyles()
     let netIncome = 0
-    props.accounts.revenues.map(item => {
+    props.accounts.revenues.forEach(item => {
         netIncome += item.money
     })
-    props.accounts.expenses.map(item => {
+    props.accounts.expenses.forEach(item => {
         netIncome -= item.money
     })
 

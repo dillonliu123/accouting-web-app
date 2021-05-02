@@ -1,10 +1,6 @@
 import React from "react"
 import {makeStyles} from "@material-ui/core";
 import Title from "../Title"
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Table from "@material-ui/core/Table";
-import Paper from "@material-ui/core/Paper"
 
 const useStyles = makeStyles((theme) => ({
     tAccount: {
@@ -90,8 +86,6 @@ const AccountsLedger = ({accounts, transactions}) => {
 }
 
 function Ledgers(props) {
-    const classes = useStyles()
-
     return(
         <div style={{margin: 20, width: "80%"}}>
             <Title titleName={"Ledgers"} />
